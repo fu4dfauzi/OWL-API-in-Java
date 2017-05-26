@@ -1,0 +1,119 @@
+package sembarang.sbr;
+
+import java.io.File;
+
+import org.semanticweb.HermiT.Configuration;
+import org.semanticweb.HermiT.Reasoner;
+
+import org.semanticweb.owlapi.apibinding.OWLManager;
+import org.semanticweb.owlapi.model.OWLException;
+import org.semanticweb.owlapi.model.OWLOntology;
+import org.semanticweb.owlapi.model.OWLOntologyCreationException;
+import org.semanticweb.owlapi.model.OWLOntologyManager;
+import org.semanticweb.owlapi.reasoner.OWLReasoner;
+
+import de.derivo.sparqldlapi.Query;
+import de.derivo.sparqldlapi.QueryEngine;
+import de.derivo.sparqldlapi.QueryResult;
+import de.derivo.sparqldlapi.exceptions.QueryEngineException;
+import de.derivo.sparqldlapi.exceptions.QueryParserException;
+
+import sembarang.sbr.OntologyProcessor;
+
+public class App 
+{
+	private static QueryEngine engine;
+	
+	public static void main( String[] args ) throws OWLException
+    {
+        try{
+        	// create ontology mgr
+        	OWLOntologyManager mgr = OWLManager.createOWLOntologyManager();
+        	
+        	// load the ontology
+        	File ontologyfile = new File("E:/Semantic Website Programming/Demo dari Mbak Kartika/family_example.owl");
+        	OWLOntology ont = mgr.loadOntologyFromOntologyDocument(ontologyfile);
+        	
+        	// create an instance of an OWL API Reasoner (we use Hermit)
+        	Configuration conf = new Configuration();
+        	OWLReasoner reasoner  = new Reasoner(conf,ont);
+        	
+        	// create an instance of the SPARQL-DL query engine
+        	engine = QueryEngine.create(mgr, reasoner,true);
+        	
+        	// some queries which over important basic lang construct of SPARQL-DL
+        	// all individuals of the class
+//        	processQuery(        	
+//        		"PREFIX : <http://www.owl-ontologies.com/generations.owl#>\n" +
+//        		"SELECT * WHERE {\n" +
+//        			"Type(?x, <http://www.owl-ontologies.com/generations.owl#Person>)\n" +
+//        		"}"
+//        	);
+        	
+        	// some queries which over important basic lang construct of SPARQL-DL
+        	// the person who has some child
+//        	processQuery(        	
+//        		"PREFIX : <http://www.owl-ontologies.com/generations.owl#>\n" +
+//        		"SELECT * WHERE {\n" +
+//        			"Type(?x, :Person),\n" +
+//        			"PropertyValue(?x,:hasChild,?y)" +
+//        		"}"
+//        	);
+        	
+        	
+        }
+    	catch (UnsupportedOperationException e) {
+			// TODO: handle exception
+    		System.out.println("Unsupported reasoner operation: " + e.getMessage());
+		}
+    	catch (OWLOntologyCreationException e) {
+			// TODO: handle exception
+    		System.out.println("Couldn't load ontology: " + e.getMessage());
+		}
+        	
+    }
+        	
+   public static void processQuery(String q){
+	   try{
+		   long startTime = System.currentTimeMillis();
+		   
+		   // create a query obj from it's string representation
+		   Query query = Query.create(q);
+		   
+		   System.out.println("Excecute the query:");
+		   System.out.println(q);
+		   System.out.println("------------------------------------");
+		   
+		   // execute the query & generate the result set
+		   QueryResult result = engine.execute(query);
+		   
+		   if(query.isAsk()){
+			   System.out.println("Result: ");
+			   if(result.ask()){
+				   System.out.print("yes");				
+			   }else{
+				   System.out.print("no");
+			   }
+		   }else{
+			   if(!result.ask()){
+				   System.out.print("Query has no solution.\n");
+			   }else{
+				   System.out.println("Result: ");
+				   System.out.println(result);
+				   System.out.println("------------------------------------");				   
+				   System.out.println("Size of result set: " + result.size());				   
+			   }
+		   }
+		   System.out.println("------------------------------------");
+		   System.out.println("Finished in" + (System.currentTimeMillis() - startTime)/1000.0 + "s\n");
+	   }
+	   catch (QueryParserException e) {
+		   // TODO: handle exception
+		   System.out.println("Query parser error" + e);
+	   }
+	   catch (QueryEngineException e) {   
+		   // TODO: handle exception
+		   System.out.println("Query engine error" + e);
+	   }
+   }
+}

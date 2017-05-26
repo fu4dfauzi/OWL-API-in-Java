@@ -1,0 +1,116 @@
+package sembarang.sbr;
+
+import java.io.File;
+import java.util.Collections;
+
+import org.semanticweb.owlapi.apibinding.OWLManager;
+import org.semanticweb.owlapi.io.SystemOutDocumentTarget;
+import org.semanticweb.owlapi.model.AddAxiom;
+import org.semanticweb.owlapi.model.IRI;
+import org.semanticweb.owlapi.model.OWLAxiom;
+import org.semanticweb.owlapi.model.OWLClass;
+import org.semanticweb.owlapi.model.OWLClassAssertionAxiom;
+import org.semanticweb.owlapi.model.OWLDataFactory;
+import org.semanticweb.owlapi.model.OWLDataProperty;
+import org.semanticweb.owlapi.model.OWLDataPropertyAssertionAxiom;
+import org.semanticweb.owlapi.model.OWLException;
+import org.semanticweb.owlapi.model.OWLIndividual;
+import org.semanticweb.owlapi.model.OWLNamedIndividual;
+import org.semanticweb.owlapi.model.OWLObjectProperty;
+import org.semanticweb.owlapi.model.OWLObjectPropertyAssertionAxiom;
+import org.semanticweb.owlapi.model.OWLOntology;
+import org.semanticweb.owlapi.model.OWLOntologyManager;
+import org.semanticweb.owlapi.model.OWLOntologyStorageException;
+import org.semanticweb.owlapi.model.PrefixManager;
+import org.semanticweb.owlapi.model.SWRLClassAtom;
+import org.semanticweb.owlapi.model.SWRLObjectPropertyAtom;
+import org.semanticweb.owlapi.model.SWRLRule;
+import org.semanticweb.owlapi.model.SWRLVariable;
+import org.semanticweb.owlapi.util.DefaultPrefixManager;
+
+public class OntologyProcessor {
+	
+	OWLOntology ontology;
+	OWLOntologyManager mgr;
+	OWLDataFactory dataFactory;
+	
+	String ontologyIRI = "http://www.owl-ontologies.com/generations.owl#";
+	PrefixManager pm = new DefaultPrefixManager(null, null, ontologyIRI);
+	File ontologyfile = new File("E:/Semantic Website Programming/Demo dari Mbak Kartika/family_example.owl"); 
+	
+	public OntologyProcessor() throws OWLException{
+		mgr = OWLManager.createOWLOntologyManager();
+		ontology = mgr.loadOntologyFromOntologyDocument(ontologyfile);
+		dataFactory = mgr.getOWLDataFactory();
+	}
+	
+	public void addClass(String nama_kelas) throws OWLOntologyStorageException {
+		OWLClass clazz = dataFactory.getOWLClass(IRI.create(ontologyIRI + nama_kelas));
+		OWLAxiom declareCls = dataFactory.getOWLDeclarationAxiom(clazz);
+		mgr.addAxiom(ontology, declareCls);
+	}
+	
+	public void addIndividuToClass(String kelas, String individu) throws OWLOntologyStorageException {
+		OWLClass clazz = dataFactory.getOWLClass(":" + kelas,pm);
+		OWLNamedIndividual instance = dataFactory.getOWLNamedIndividual(":" + individu,pm);
+		
+		//input instance to specific class
+		OWLClassAssertionAxiom classAssertion = dataFactory.getOWLClassAssertionAxiom(clazz, instance);
+		mgr.addAxiom(ontology, classAssertion);
+		
+		//print and save the ontology
+		mgr.saveOntology(ontology, new SystemOutDocumentTarget());
+		mgr.saveOntology(ontology,IRI.create(ontologyfile.toURI()));
+	}
+	
+	public void addObjectProperties(String ObjProperty, String idv1, String idv2) throws OWLOntologyStorageException{
+		OWLObjectProperty ObjectProperty = dataFactory.getOWLObjectProperty(":"+ObjProperty, pm);
+		OWLIndividual instance1 = dataFactory.getOWLNamedIndividual(":"+idv1, pm);
+		OWLIndividual instance2 = dataFactory.getOWLNamedIndividual(":"+idv2, pm);
+		
+		OWLObjectPropertyAssertionAxiom opAssertion = dataFactory.getOWLObjectPropertyAssertionAxiom(ObjectProperty, instance1, instance2);
+
+		mgr.addAxiom(ontology, opAssertion);
+		
+		mgr.saveOntology(ontology, new SystemOutDocumentTarget());
+		mgr.saveOntology(ontology, IRI.create(ontologyfile.toURI()));
+	}
+	
+	public void addDataProperties(String DtProperty, String idv, String ltrl) throws OWLOntologyStorageException {
+		OWLDataProperty DataProperty = dataFactory.getOWLDataProperty(":"+DtProperty,pm);
+		OWLNamedIndividual instance = dataFactory.getOWLNamedIndividual(":"+idv, pm);
+
+		OWLDataPropertyAssertionAxiom dpAssertion = dataFactory.getOWLDataPropertyAssertionAxiom(DataProperty, instance, ltrl);
+		
+		mgr.applyChange(new AddAxiom(ontology, dpAssertion));
+		
+		//print & save ontology
+		
+		mgr.saveOntology(ontology, new SystemOutDocumentTarget());
+		mgr.saveOntology(ontology, IRI.create(ontologyfile.toURI()));
+	}
+	
+	public void addRule(String ObjPropertyBody, String classHead){
+		try {
+			OWLObjectProperty ObjectPropertyBody = dataFactory.getOWLObjectProperty(IRI.create(ontologyIRI + ObjPropertyBody));
+			OWLClass clsHead = dataFactory.getOWLClass(IRI.create(ontologyIRI + classHead));
+			
+			SWRLVariable var1 = dataFactory.getSWRLVariable(IRI.create(ontologyIRI + "x"));
+			SWRLVariable var2 = dataFactory.getSWRLVariable(IRI.create(ontologyIRI + "y"));
+			
+			SWRLObjectPropertyAtom body = dataFactory.getSWRLObjectPropertyAtom(ObjectPropertyBody, var1, var2);
+			
+			SWRLClassAtom head = dataFactory.getSWRLClassAtom(clsHead, var1);
+			
+			SWRLRule rule = dataFactory.getSWRLRule(Collections.singleton(body), Collections.singleton(head));
+			
+			mgr.applyChange(new AddAxiom(ontology, rule));
+			
+			mgr.saveOntology(ontology, new SystemOutDocumentTarget());
+			mgr.saveOntology(ontology, IRI.create(ontologyfile.toURI()));		
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+	}
+}

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="java.io.File"/>
+<fullyQualifiedTypeName name="org.semanticweb.HermiT.Configuration"/>
+<fullyQualifiedTypeName name="org.semanticweb.owlapi.reasoner.OWLReasoner"/>
+<fullyQualifiedTypeName name="org.semanticweb.HermiT.Reasoner"/>
+<fullyQualifiedTypeName name="de.derivo.sparqldlapi.QueryEngine"/>
+<fullyQualifiedTypeName name="java.lang.UnsupportedOperationException"/>
+<fullyQualifiedTypeName name="org.semanticweb.owlapi.model.OWLOntologyCreationException"/>
+<fullyQualifiedTypeName name="de.derivo.sparqldlapi.Query"/>
+<fullyQualifiedTypeName name="de.derivo.sparqldlapi.QueryResult"/>
+<fullyQualifiedTypeName name="de.derivo.sparqldlapi.exceptions.QueryParserException"/>
+<fullyQualifiedTypeName name="de.derivo.sparqldlapi.exceptions.QueryEngineException"/>
+<fullyQualifiedTypeName name="org.semanticweb.owlapi.model.OWLOntology"/>
+<fullyQualifiedTypeName name="org.semanticweb.owlapi.model.OWLOntologyManager"/>
+<fullyQualifiedTypeName name="org.semanticweb.owlapi.model.OWLDataFactory"/>
+<fullyQualifiedTypeName name="org.semanticweb.owlapi.model.PrefixManager"/>
+<fullyQualifiedTypeName name="org.semanticweb.owlapi.util.DefaultPrefixManager"/>
+<fullyQualifiedTypeName name="sembarang.sbr.OntologyProcessor"/>
+<fullyQualifiedTypeName name="java.lang.Exception"/>
+<fullyQualifiedTypeName name="org.semanticweb.owlapi.apibinding.OWLManager"/>
+<fullyQualifiedTypeName name="org.semanticweb.owlapi.model.IRI"/>
+<fullyQualifiedTypeName name="org.semanticweb.owlapi.model.OWLException"/>
+<fullyQualifiedTypeName name="java.lang.System"/>
+<fullyQualifiedTypeName name="org.semanticweb.owlapi.model.OWLAxiom"/>
+<fullyQualifiedTypeName name="org.semanticweb.owlapi.model.OWLOntologyStorageException"/>
+<fullyQualifiedTypeName name="org.semanticweb.owlapi.model.OWLClass"/>
+<fullyQualifiedTypeName name="java.lang.String"/>
+<fullyQualifiedTypeName name="org.semanticweb.owlapi.model.OWLNamedIndividual"/>
+<fullyQualifiedTypeName name="org.semanticweb.owlapi.model.OWLClassAssertionAxiom"/>
+<fullyQualifiedTypeName name="org.semanticweb.owlapi.io.SystemOutDocumentTarget"/>
+</qualifiedTypeNameHistroy>
