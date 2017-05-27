@@ -63,11 +63,10 @@ public class App
         	
         	OntologyProcessor OP = new OntologyProcessor();
         	
-        	//menambah class profession
+        	//tambah class profession
         	OP.addClass("Profession");
+        	OP.addIndividuToClass("Person", "Fuad");
         	
-        	//menambah individu Fuad di class Person
-        	OP.addIndividuToClass("Person", "Fuad");        	
         	
         }
     	catch (UnsupportedOperationException e) {

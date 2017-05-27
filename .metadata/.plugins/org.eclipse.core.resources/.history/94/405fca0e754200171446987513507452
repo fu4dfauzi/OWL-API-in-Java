@@ -63,10 +63,8 @@ public class App
         	
         	OntologyProcessor OP = new OntologyProcessor();
         	
-        	//menambah class profession
+        	//tambah class profession
         	OP.addClass("Profession");
-        	
-        	//menambah individu Fuad di class Person
         	OP.addIndividuToClass("Person", "Fuad");        	
         	
         }

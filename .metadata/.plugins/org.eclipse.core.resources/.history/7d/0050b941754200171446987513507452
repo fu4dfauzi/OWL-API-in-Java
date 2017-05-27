@@ -51,8 +51,8 @@ public class OntologyProcessor {
 	}
 	
 	public void addIndividuToClass(String kelas, String individu) throws OWLOntologyStorageException {
-		OWLClass clazz = dataFactory.getOWLClass(":"+kelas,pm);
-		OWLNamedIndividual instance = dataFactory.getOWLNamedIndividual(":"+individu,pm);
+		OWLClass clazz = dataFactory.getOWLClass(":" + kelas,pm);
+		OWLNamedIndividual instance = dataFactory.getOWLNamedIndividual(":" + individu,pm);
 		
 		//input instance to specific class
 		OWLClassAssertionAxiom classAssertion = dataFactory.getOWLClassAssertionAxiom(clazz, instance);

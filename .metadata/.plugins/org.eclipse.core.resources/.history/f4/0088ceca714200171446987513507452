@@ -31,7 +31,6 @@ public class App
         	OWLOntologyManager mgr = OWLManager.createOWLOntologyManager();
         	
         	// load the ontology
-        	// file ontology tersedia di folder /assets
         	File ontologyfile = new File("E:/Semantic Website Programming/Demo dari Mbak Kartika/family_example.owl");
         	OWLOntology ont = mgr.loadOntologyFromOntologyDocument(ontologyfile);
         	
@@ -63,11 +62,10 @@ public class App
         	
         	OntologyProcessor OP = new OntologyProcessor();
         	
-        	//menambah class profession
+        	//tambah class profession
         	OP.addClass("Profession");
+        	OP.addIndividuToClass("Person", "Fuad");
         	
-        	//menambah individu Fuad di class Person
-        	OP.addIndividuToClass("Person", "Fuad");        	
         	
         }
     	catch (UnsupportedOperationException e) {

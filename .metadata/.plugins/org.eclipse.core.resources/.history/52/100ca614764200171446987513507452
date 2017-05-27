@@ -67,7 +67,7 @@ public class App
         	OP.addClass("Profession");
         	
         	//menambah individu Fuad di class Person
-        	OP.addIndividuToClass("Person", "Fuad");        	
+        	//OP.addIndividuToClass("Person", "Fuad");        	
         	
         }
     	catch (UnsupportedOperationException e) {
