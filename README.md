@@ -21,14 +21,14 @@ Kebutuhan Sistem:
 2. Deklarasikan OntologyProcessor di App.java, karena yang di-*run* adalah App.java
 3. Eksplorasi ontology dapat dilakukan menggunakan OWL API atau (*cara yang mudah*) menggunakan Protege
 
-    //deklarasi OntologyProcessor sebagai OP
-    OntologyProcessor OP = new 
-    
-    //tambah class profession
-    OP.addClass("Profession");
-    
-    //menambah individu Fuad di class Person.
-    OP.addIndividuToClass("Person", "Fuad");  
+>     //deklarasi OntologyProcessor sebagai OP
+>     OntologyProcessor OP = new 
+>     
+>     //tambah class profession
+>     OP.addClass("Profession");
+>     
+>     //menambah individu Fuad di class Person.
+>     OP.addIndividuToClass("Person", "Fuad");
 
 **Atribusi:**
 
